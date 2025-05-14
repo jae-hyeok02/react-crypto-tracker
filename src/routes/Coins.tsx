@@ -24,7 +24,8 @@ const Coin = styled.li`
   border-radius: 15px;
 
   a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
   }
@@ -76,6 +77,12 @@ const coins = [
   },
 ];
 
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -113,7 +120,17 @@ function Coins() {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name },
+                }}
+              >
+                <Img
+                  src={`https://cryptoicon-api.pages.dev/api/icon/${coin.symbol.toLowerCase()}`}
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>
