@@ -1,6 +1,8 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { darkTheme, lightTheme } from "./theme";
+import { useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
@@ -65,12 +67,40 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const ThemeToggleBtn = styled.button`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+  border: 3px solid ${(props) => props.theme.textColor};
+  border-radius: 10px;
+  color: ${(props) => props.theme.textColor};
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease-in;
+
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+  }
+`;
+
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => {
+    setIsDark((current) => !current);
+  };
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <ThemeToggleBtn onClick={toggleDark}>
+          {isDark ? "☀️" : "🌙"}
+        </ThemeToggleBtn>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </ThemeProvider>
     </>
   );
 }

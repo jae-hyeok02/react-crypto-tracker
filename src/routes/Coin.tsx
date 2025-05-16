@@ -21,6 +21,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +37,7 @@ const Title = styled.h1`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -70,7 +71,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
@@ -83,6 +84,21 @@ const Tab = styled.span<{ isActive: boolean }>`
 const Loader = styled.span`
   display: block;
   text-align: center;
+`;
+
+const ThemeToggleBtn = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  color: ${(props) => props.theme.textColor};
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 interface RouteParams {
@@ -178,6 +194,18 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
+        <Link
+          to="/"
+          style={{
+            position: "absolute",
+            left: 20,
+            top: 40,
+            fontSize: 30,
+            color: "#9c88ff",
+          }}
+        >
+          &larr;
+        </Link>
       </Header>
 
       {loading ? (
@@ -195,7 +223,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>{tickersData?.quotes?.USD?.price?.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
 
@@ -223,7 +251,7 @@ function Coin() {
 
           <Switch>
             <Route path={`/${coinId}/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
             <Route path={`/${coinId}/chart`}>
               <Chart coinId={coinId} />
