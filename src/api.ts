@@ -7,7 +7,6 @@ export function fetchCoins() {
 }
 
 export function fetchCoinInfo(coinId: string) {
-  //return fetch(`${BASE_URL}/coins/${coinId}`).then((response) =>
   return fetch(`${BASE_URL}/coins/${coinId}`).then((response) =>
     response.json()
   );
@@ -20,9 +19,9 @@ export function fetchCoinTickers(coinId: string) {
 }
 
 export function fetchCoinHistory(coinId: string) {
-  const endDate = Math.floor(Date.now() / 1000); // millisecond => second로 변경
-  const startDate = endDate - 60 * 60 * 24 * 7; // 현재 기준 7일 전
-  ///historical?start=${startDate}&end=${endDate}
+  /*const endDate = Math.floor(Date.now() / 1000); // millisecond => second로 변경
+  const startDate = endDate - 60 * 60 * 24 * 7; // 현재 기준 7일 전*/
+  // /historical?start=${startDate}&end=${endDate}
   return fetch(`${BASE_URL2}?coinId=${coinId}`).then((response) =>
     response.json()
   );
