@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -96,6 +98,8 @@ interface ICoin {
   is_active: boolean;
   type: string;
 }
+
+interface ICoinsProps {}
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>({
